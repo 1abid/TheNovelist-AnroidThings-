@@ -1,4 +1,4 @@
-package novelist.vaigna.mama.steppermotordriver.uln2003driver
+package novelist.vaigna.mama.steppermotordriver.uln2003driver.motor
 
 
 /**

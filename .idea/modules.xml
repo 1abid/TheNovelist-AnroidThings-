@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TheNovelist.iml" filepath="$PROJECT_DIR$/TheNovelist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TheNovelist-AnroidThings-.iml" filepath="$PROJECT_DIR$/TheNovelist-AnroidThings-.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/steppermotordriver/steppermotordriver.iml" filepath="$PROJECT_DIR$/steppermotordriver/steppermotordriver.iml" />
       <module fileurl="file://$PROJECT_DIR$/steppermotordriver/steppermotordriver.iml" filepath="$PROJECT_DIR$/steppermotordriver/steppermotordriver.iml" />
     </modules>
   </component>

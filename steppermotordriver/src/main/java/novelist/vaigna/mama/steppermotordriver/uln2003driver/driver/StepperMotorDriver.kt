@@ -1,4 +1,7 @@
-package novelist.vaigna.mama.steppermotordriver.uln2003driver
+package novelist.vaigna.mama.steppermotordriver.uln2003driver.driver
+
+import novelist.vaigna.mama.steppermotordriver.uln2003driver.motor.Direction
+import novelist.vaigna.mama.steppermotordriver.uln2003driver.motor.StepDuration
 
 
 /**

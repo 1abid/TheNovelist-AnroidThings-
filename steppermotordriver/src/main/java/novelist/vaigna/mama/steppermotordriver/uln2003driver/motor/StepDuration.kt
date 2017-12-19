@@ -1,11 +1,11 @@
-package novelist.vaigna.mama.steppermotordriver.uln2003driver
+package novelist.vaigna.mama.steppermotordriver.uln2003driver.motor
 
 
 /**
  * Created by Abid Hasan on 18/12/17.
  */
 
-data class StepDuration(val millis:Long = 1 , val nano:Long = 0) {
+data class StepDuration(val millis:Long = 1 , val nano:Int = 0) {
 
     init {
         if(millis < 0)
