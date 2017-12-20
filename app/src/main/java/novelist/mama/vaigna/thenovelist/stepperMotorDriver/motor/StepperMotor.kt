@@ -2,7 +2,7 @@ package novelist.vaigna.mama.steppermotordriver.uln2003driver.motor
 
 import novelist.vaigna.mama.steppermotordriver.uln2003driver.driver.StepperMotorDriver
 import novelist.vaigna.mama.steppermotordriver.uln2003driver.listener.RotationListener
-import novelist.vaigna.mama.steppermotordriver.uln2003driver.listener.StepsListener
+import novelist.vaigna.mama.steppermotordriver.uln2003driver.listener.StepListener
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -40,7 +40,7 @@ abstract class StepperMotor : AutoCloseable {
         val stepsToPerform = getStepsFromDegrees(degrees, resolutionId)
         val executionDuration = getExecutionDurationNanos(rpm, resolutionId, stepsToPerform)
         val motorRunner = getMotorRunner(stepsToPerform, direction, resolutionId, executionDuration)
-        motorRunner.stepListener = object : StepsListener {
+        motorRunner.stepListener = object : StepListener {
             override fun onStarted() {
                 rotationListener?.onStarted()
             }

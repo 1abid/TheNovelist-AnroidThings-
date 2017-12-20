@@ -1,7 +1,7 @@
 package novelist.vaigna.mama.steppermotordriver.uln2003driver.motor
 
 import novelist.vaigna.mama.steppermotordriver.uln2003driver.driver.StepperMotorDriver
-import novelist.vaigna.mama.steppermotordriver.uln2003driver.listener.StepsListener
+import novelist.vaigna.mama.steppermotordriver.uln2003driver.listener.StepListener
 
 /**
  * Created by abidhasan on 19/12/17.
@@ -11,7 +11,7 @@ abstract class MotorRunner(val motorDriver: StepperMotorDriver,
                            val direction: Direction,
                            val executionDurationNanos: Long) : Runnable {
 
-    var stepListener: StepsListener? = null
+    var stepListener: StepListener? = null
     var stepDurationNanos: Long = 0
     var executionStartNanos: Long = 0
 

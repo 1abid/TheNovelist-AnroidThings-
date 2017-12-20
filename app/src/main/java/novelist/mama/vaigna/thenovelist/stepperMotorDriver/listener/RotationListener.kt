@@ -1,9 +1,12 @@
 package novelist.vaigna.mama.steppermotordriver.uln2003driver.listener
 
+
 /**
- * Created by abidhasan on 19/12/17.
+ * Created by Abid Hasan on 20/12/17.
  */
+
 interface RotationListener {
+
     fun onStarted() {
     }
 

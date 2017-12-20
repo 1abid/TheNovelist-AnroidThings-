@@ -1,4 +1,4 @@
-package com.polidea.androidthings.driver.steppermotor.awaiter
+package novelist.mama.vaigna.thenovelist.stepperMotorDriver
 
 class DefaultAwaiter(val busyAwaitThresholdMillis: Long = 2, val busyAwaitThresholdNanos: Int = 0) : Awaiter {
 
