@@ -35,6 +35,7 @@ abstract class MotorRunner(val motorDriver: StepperMotorDriver,
                 return
             }
         }
+        stepListener?.onFinishedSuccessfully()
 
     }
 

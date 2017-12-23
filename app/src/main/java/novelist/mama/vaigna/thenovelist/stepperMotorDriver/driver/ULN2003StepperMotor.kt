@@ -1,5 +1,6 @@
 package novelist.vaigna.mama.steppermotordriver.uln2003driver.driver
 
+import android.util.Log
 import novelist.vaigna.mama.steppermotordriver.uln2003driver.motor.Direction
 import novelist.vaigna.mama.steppermotordriver.uln2003driver.motor.MotorRunner
 import novelist.vaigna.mama.steppermotordriver.uln2003driver.motor.StepperMotor
@@ -34,7 +35,9 @@ class ULN2003StepperMotor(in1GpioId : String,
     }
 
     override fun getStepsFromDegrees(degrees: Double, resolutionId: Int): Int {
-        return (degrees / CIRCLE_DEGREES.toDouble() * getStepsPerRevolution(resolutionId).toDouble()).toInt()
+        var step = (degrees / CIRCLE_DEGREES.toDouble() * getStepsPerRevolution(resolutionId).toDouble()).toInt()
+        Log.i("Step from degree" , step.toString())
+        return step
     }
 
     override fun getDegreesFromSteps(steps: Int, resolutionId: Int): Double {

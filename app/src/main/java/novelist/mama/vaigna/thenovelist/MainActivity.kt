@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         stepper = ULN2003StepperMotor(in1Pin, in2Pin, in3Pin, in4Pin)
         stepper.rotate(degrees = 180.0,
                 direction = Direction.CLOCKWISE,
-                resolutionId = ULN2003Resolution.FULL.id,
+                resolutionId = ULN2003Resolution.HALF.id,
                 rpm = 5.0,
                 rotationListener = object : RotationListener {
                     override fun onStarted() {
