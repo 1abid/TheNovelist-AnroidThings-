@@ -2,8 +2,15 @@ package novelist.mama.vaigna.thenovelist;
 
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 
@@ -14,6 +21,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Abid Hasan on 23/12/17.
@@ -40,10 +55,16 @@ public class ImageBinaryConversionTest {
     ImageBinaryOutLine objectUnderTest;
 
 
+    int arrayMiddleLength;
+
     @Before
     public void setUp() {
 
         objectUnderTest = new ImageBinaryOutLine(matrixUnderTest);
+
+        MockitoAnnotations.initMocks(this);
+
+        arrayMiddleLength = objectUnderTest.getMatrixMiddle() + objectUnderTest.getCOLUMN_COUNT() / 2;
 
     }
 
@@ -68,13 +89,13 @@ public class ImageBinaryConversionTest {
 
         objectUnderTest.convertAllOneToZero();
 
-        int[][] matrix_Under_test = objectUnderTest.getGivenBatManBinary() ;
+        int[][] matrix_Under_test = objectUnderTest.getGivenBatManBinary();
 
-        boolean isZero = false ;
+        boolean isZero = false;
 
-        for (int row = 0 ; row < matrix_Under_test.length ; row ++ ){
-            for (int column = 0 ; column < matrix_Under_test[0].length ; column ++){
-                isZero = matrix_Under_test[row][column] == 0 ? true : false ;
+        for (int row = 0; row < matrix_Under_test.length; row++) {
+            for (int column = 0; column < matrix_Under_test[0].length; column++) {
+                isZero = matrix_Under_test[row][column] == 0 ? true : false;
             }
         }
 
@@ -130,45 +151,70 @@ public class ImageBinaryConversionTest {
 
         assertNotNull(underTest);
 
-        assertThat(underTest.rowIndex , is(equalTo(target.rowIndex)));
+        assertThat(underTest.rowIndex, is(equalTo(target.rowIndex)));
 
     }
 
 
     @Test
-    public void canCalculateMiddleIndexOfTargetArray(){
+    public void canCalculateMiddleIndexOfTargetArray() {
 
         //should get 0 for even matrix
         int count = objectUnderTest.getMatrixMiddle();
-        assertThat("Should have 1 extra middle point for an odd matrix " ,1 , is(equalTo(count)));
+        assertThat("Should have 1 extra middle point for an odd matrix ", 1, is(equalTo(count)));
 
     }
 
 
-
     @Test
-    public void forwardOrBackwardSearchBasedOnAIndexValue(){
+    public void forwardOrBackwardSearchBasedOnAIndexValue() {
 
-        objectUnderTest.setItem(0,6);
+        //forward search
 
-        ImageBinaryOutLine.ValueZero pointOfInterest = objectUnderTest.getItem() ;
+        ImageBinaryOutLine spy = Mockito.spy(objectUnderTest);
 
-        objectUnderTest.makeOutLine(pointOfInterest);
+        spy.setItem(0, 6);
 
+        ImageBinaryOutLine.ValueZero pointOfInterest = spy.getItem();
+
+        spy.makeOutLine(pointOfInterest);
+
+        verify(spy, atLeastOnce()).backwardScan(spy.getMatrixMiddle() + spy.getCOLUMN_COUNT() / 2, pointOfInterest);
+
+        //backward search
+        spy.setItem(1, 15);
+
+        ImageBinaryOutLine.ValueZero pointOfInterestTwo = spy.getItem();
+
+        spy.makeOutLine(pointOfInterestTwo);
+
+        verify(spy, atLeastOnce()).forwardIndexScan(spy.getMatrixMiddle() + spy.getCOLUMN_COUNT() / 2, pointOfInterestTwo);
 
 
     }
 
+
     @Test
-    public void consecutivePreviousZeroValue(){
+    public void forwardSearchValidFromOneParticularPoint() {
+        ImageBinaryOutLine spy = spy(objectUnderTest);
 
-        objectUnderTest.convertAllOneToZero();
+        spy.convertAllOneToZero();
 
-        objectUnderTest.setItem(1,14);
+        spy.setItem(1, 18);
 
-        int count = objectUnderTest.forwardIndexScan(objectUnderTest.getMatrixMiddle() , objectUnderTest.getItem());
+        ImageBinaryOutLine.ValueZero pointOfInterest = spy.getItem();
 
-        assertEquals(2 , count);
+        spy.findPreviousZerosAndConvert();
+
+        assertNotNull(spy.tempOneValueMatrix);
+
+
+
+        ArgumentCaptor<Integer> captor = ArgumentCaptor.forClass(Integer.class) ;
+        verify(spy , atLeastOnce()).forwardIndexScan(spy.getMatrixHalfLenght() , pointOfInterest);
+
+        assertThat(captor.capture() , equalTo(2));
+
     }
 
 
