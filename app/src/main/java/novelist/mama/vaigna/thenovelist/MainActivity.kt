@@ -19,10 +19,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var stepper: ULN2003StepperMotor
 
+    private val matrix = TestMatrix.batmanMatrix;
 
+    private lateinit var matrixConverter : ImageBinaryOutLine
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
     }
 
     override fun onResume() {

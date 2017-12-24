@@ -25,7 +25,8 @@ public class ImageBinaryOutLine {
         ROW_COUNT = givenBatManBinary.length;
         COLUMN_COUNT = givenBatManBinary[0].length;
 
-        convetedBatmanBinary = new int[ROW_COUNT][COLUMN_COUNT];
+        convetedBatmanBinary = givenBatManBinary;
+
     }
 
 
@@ -33,7 +34,7 @@ public class ImageBinaryOutLine {
 
     protected ValueZero[] tempOneValueMatrix;
 
-    public void convertAllOneToZero() {
+    protected void convertAllOneToZero() {
 
         for (int row = 0; row < ROW_COUNT; row++) {
             for (int column = 0; column < COLUMN_COUNT; column++) {
@@ -41,7 +42,7 @@ public class ImageBinaryOutLine {
                     givenBatManBinary[row][column] = 0;
                     convetedBatmanBinary[row][column] = 0;
                 } else {
-                    convetedBatmanBinary[row][column] = 1 ;
+                    convetedBatmanBinary[row][column] = 1;
                     item = new ValueZero(row, column);
                     valueZerosIndexList.add(item);
                 }
@@ -52,6 +53,15 @@ public class ImageBinaryOutLine {
     public void findPreviousZerosAndConvert() {
         for (ValueZero item : valueZerosIndexList) {
             makeOutLine(item);
+        }
+
+        for (int row = 0 ; row< convetedBatmanBinary.length ; row++){
+            for (int column = 0 ; column < convetedBatmanBinary[row].length ; column ++){
+                if(column > convetedBatmanBinary[row].length)
+                    System.out.print("\n");
+                else
+                    System.out.print(" " + convetedBatmanBinary[row][column]);
+            }
         }
     }
 
@@ -64,42 +74,40 @@ public class ImageBinaryOutLine {
 
 
         if (startPositionY > matrixHalfLength) {
-            forwardIndexScan(matrixHalfLength, indexWithPreviousZero);
+            forwardIndexScan(indexWithPreviousZero);
             return;
         }
 
-        backwardScan(matrixHalfLength, indexWithPreviousZero);
+        backwardScan(indexWithPreviousZero);
 
     }
 
 
-    protected void forwardIndexScan(int matrixHalfLength, ValueZero indexWithPreviousZero) {
+    protected int[] forwardIndexScan( ValueZero indexWithPreviousZero) {
 
-        int count = 0;
+        int[] arrayUnderInspection = new int[getMatrixHalfLenght()] ;
 
-        tempOneValueMatrix = new ValueZero[matrixHalfLength];
+        int startingRowNumber = indexWithPreviousZero.rowIndex ;
 
-        for (int row = matrixHalfLength +1 ; row > getCOLUMN_COUNT() - 1; row++) {
+        for (int i = getMatrixHalfLenght() - 1 ; i < getCOLUMN_COUNT() ; i++){
 
-            if (count >= matrixHalfLength)
-                return;
+            int value = convetedBatmanBinary[startingRowNumber][i];
 
-            if(convetedBatmanBinary[row][indexWithPreviousZero.columnIndex] == 1){
-                tempOneValueMatrix[count] = indexWithPreviousZero ;
-                count ++ ;
-            }
-
+            arrayUnderInspection[i+1 - getMatrixHalfLenght()] = value ;
         }
+
+        return arrayUnderInspection ;
+    }
+
+    private void makeBorder(int[] arrayOfOne){
+
     }
 
 
-    protected void backwardScan(int matrixHalfLength, ValueZero indexWithPreviousZero) {
+    protected void backwardScan(ValueZero indexWithPreviousZero) {
 
-        int[] tempOneValueMatrix = new int[matrixHalfLength];
 
-        int count = 0;
-
-        for (int row = matrixHalfLength; row < 0; row--) {
+        for (int row = getMatrixHalfLenght(); row < 0; row--) {
 
         }
 
@@ -165,8 +173,6 @@ public class ImageBinaryOutLine {
         return (COLUMN_COUNT / 2) + getMatrixMiddle();
     }
 
-    protected int getIndexOfaPreviousZeroPoint(ValueZero indexWithPreviousZero) {
-        return valueZerosIndexList.indexOf(indexWithPreviousZero);
-    }
+
 
 }

@@ -9,6 +9,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import static android.support.v4.content.MimeTypeFilter.matches;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -54,6 +56,7 @@ public class ImageBinaryConversionTest {
 
     ImageBinaryOutLine objectUnderTest;
 
+    ImageBinaryOutLine spyObject ;
 
     int arrayMiddleLength;
 
@@ -66,6 +69,7 @@ public class ImageBinaryConversionTest {
 
         arrayMiddleLength = objectUnderTest.getMatrixMiddle() + objectUnderTest.getCOLUMN_COUNT() / 2;
 
+        spyObject = spy(objectUnderTest);
     }
 
 
@@ -102,6 +106,38 @@ public class ImageBinaryConversionTest {
         assertEquals("all values are zero ", true, isZero);
     }
 
+
+    @Test
+    public void convertedBinaryMatrixHasOneForPreviousZero(){
+
+        objectUnderTest.convertAllOneToZero();
+
+        //point which has 0 as previous value
+        objectUnderTest.setItem(1,18);
+
+        ImageBinaryOutLine.ValueZero itemUnderTest = objectUnderTest.getItem() ;
+
+        assertEquals("point of interest is the correct one " , 1 , itemUnderTest.rowIndex);
+        assertEquals("point of interest is the correct one " , 18 , itemUnderTest.columnIndex);
+
+
+
+        assertTrue("after conversion our point of interest became 1" ,
+                objectUnderTest.convetedBatmanBinary[itemUnderTest.rowIndex][itemUnderTest.columnIndex] == 1);
+
+
+        //point which has 0 as previous value
+        objectUnderTest.setItem(6,25);
+
+        ImageBinaryOutLine.ValueZero itemUnderTestTwo = objectUnderTest.getItem() ;
+
+        assertEquals("point of interest is the correct one " , 6 , itemUnderTestTwo.rowIndex);
+        assertEquals("point of interest is the correct one " , 25 , itemUnderTestTwo.columnIndex);
+
+        assertTrue("after conversion our point of interest became 1" ,
+                objectUnderTest.convetedBatmanBinary[itemUnderTestTwo.rowIndex][itemUnderTestTwo.columnIndex] == 1);
+
+    }
 
     @Test
     public void WhileConvertingWeCanSaveIndexOfZero() {
@@ -169,63 +205,52 @@ public class ImageBinaryConversionTest {
     @Test
     public void forwardOrBackwardSearchBasedOnAIndexValue() {
 
-        //forward search
-
-        ImageBinaryOutLine spy = Mockito.spy(objectUnderTest);
-
-        spy.setItem(0, 6);
-
-        ImageBinaryOutLine.ValueZero pointOfInterest = spy.getItem();
-
-        spy.makeOutLine(pointOfInterest);
-
-        verify(spy, atLeastOnce()).backwardScan(spy.getMatrixMiddle() + spy.getCOLUMN_COUNT() / 2, pointOfInterest);
-
         //backward search
-        spy.setItem(1, 15);
 
-        ImageBinaryOutLine.ValueZero pointOfInterestTwo = spy.getItem();
+        spyObject.setItem(0, 6);
 
-        spy.makeOutLine(pointOfInterestTwo);
+        ImageBinaryOutLine.ValueZero pointOfInterest = spyObject.getItem();
 
-        verify(spy, atLeastOnce()).forwardIndexScan(spy.getMatrixMiddle() + spy.getCOLUMN_COUNT() / 2, pointOfInterestTwo);
+        spyObject.makeOutLine(pointOfInterest);
 
+        verify(spyObject, times(1)).backwardScan(pointOfInterest);
+
+        //forward search
+        spyObject.setItem(1, 15);
+
+        ImageBinaryOutLine.ValueZero pointOfInterestTwo = spyObject.getItem();
+
+        spyObject.makeOutLine(pointOfInterestTwo);
+
+        verify(spyObject, times(1)).forwardIndexScan(pointOfInterestTwo);
 
     }
 
 
     @Test
-    public void forwardSearchValidFromOneParticularPoint() {
-
+    public void forwardScanFromOnePointCrateAnArray(){
 
         objectUnderTest.convertAllOneToZero();
 
-        objectUnderTest.setItem(1, 18);
+        //point which has 0 as previous value
+        objectUnderTest.setItem(1,14);
 
-        ImageBinaryOutLine.ValueZero pointOfInterest = objectUnderTest.getItem();
+        ImageBinaryOutLine.ValueZero itemUnderTest = objectUnderTest.getItem() ;
 
-        objectUnderTest.findPreviousZerosAndConvert();
+        assertEquals("point of interest is the correct one " , 1 , itemUnderTest.rowIndex);
+        assertEquals("point of interest is the correct one " , 14 , itemUnderTest.columnIndex);
 
-        assertNotNull(objectUnderTest.tempOneValueMatrix);
+        assertTrue("this point has one" ,
+                objectUnderTest.convetedBatmanBinary[itemUnderTest.rowIndex][itemUnderTest.columnIndex] == 0);
 
 
-        objectUnderTest.forwardIndexScan(objectUnderTest.getMatrixHalfLenght() , pointOfInterest);
+        int[] returnArray = objectUnderTest.forwardIndexScan(itemUnderTest);
 
-        for(int i = 0 ; i < objectUnderTest.getROW_COUNT() ; i++ ){
-            for (int j =0 ; j < objectUnderTest.getCOLUMN_COUNT() ; i++){
-                /*if(i == objectUnderTest.getROW_COUNT())
-                    System.out.print(" "+objectUnderTest.convetedBatmanBinary[i][j]+"\n");
-                else*/
-                    System.out.print(" "+objectUnderTest.convetedBatmanBinary[i][j]);
+        assertThat("expected array length " ,  returnArray.length == objectUnderTest.getMatrixHalfLenght() );
 
-            }
+        for (int i = 0 ; i <returnArray.length ; i++){
+            System.out.print(" "+returnArray[i]);
         }
-
-
-        /*for (int i =0 ; i< objectUnderTest.tempOneValueMatrix.length ; i++){
-            System.out.println(objectUnderTest.tempOneValueMatrix[i]);
-        }*/
-
     }
 
 
