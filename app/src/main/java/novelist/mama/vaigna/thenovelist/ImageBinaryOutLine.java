@@ -93,7 +93,7 @@ public class ImageBinaryOutLine {
     }
 
 
-    protected int backwardScan(int matrixHalfLength, ValueZero indexWithPreviousZero) {
+    protected void backwardScan(int matrixHalfLength, ValueZero indexWithPreviousZero) {
 
         int[] tempOneValueMatrix = new int[matrixHalfLength];
 
@@ -103,7 +103,6 @@ public class ImageBinaryOutLine {
 
         }
 
-        return count;
     }
 
 

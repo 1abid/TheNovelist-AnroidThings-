@@ -196,24 +196,35 @@ public class ImageBinaryConversionTest {
 
     @Test
     public void forwardSearchValidFromOneParticularPoint() {
-        ImageBinaryOutLine spy = spy(objectUnderTest);
-
-        spy.convertAllOneToZero();
-
-        spy.setItem(1, 18);
-
-        ImageBinaryOutLine.ValueZero pointOfInterest = spy.getItem();
-
-        spy.findPreviousZerosAndConvert();
-
-        assertNotNull(spy.tempOneValueMatrix);
 
 
+        objectUnderTest.convertAllOneToZero();
 
-        ArgumentCaptor<Integer> captor = ArgumentCaptor.forClass(Integer.class) ;
-        verify(spy , atLeastOnce()).forwardIndexScan(spy.getMatrixHalfLenght() , pointOfInterest);
+        objectUnderTest.setItem(1, 18);
 
-        assertThat(captor.capture() , equalTo(2));
+        ImageBinaryOutLine.ValueZero pointOfInterest = objectUnderTest.getItem();
+
+        objectUnderTest.findPreviousZerosAndConvert();
+
+        assertNotNull(objectUnderTest.tempOneValueMatrix);
+
+
+        objectUnderTest.forwardIndexScan(objectUnderTest.getMatrixHalfLenght() , pointOfInterest);
+
+        for(int i = 0 ; i < objectUnderTest.getROW_COUNT() ; i++ ){
+            for (int j =0 ; j < objectUnderTest.getCOLUMN_COUNT() ; i++){
+                /*if(i == objectUnderTest.getROW_COUNT())
+                    System.out.print(" "+objectUnderTest.convetedBatmanBinary[i][j]+"\n");
+                else*/
+                    System.out.print(" "+objectUnderTest.convetedBatmanBinary[i][j]);
+
+            }
+        }
+
+
+        /*for (int i =0 ; i< objectUnderTest.tempOneValueMatrix.length ; i++){
+            System.out.println(objectUnderTest.tempOneValueMatrix[i]);
+        }*/
 
     }
 
