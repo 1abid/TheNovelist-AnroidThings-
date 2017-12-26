@@ -56,7 +56,7 @@ public class ImageBinaryConversionTest {
 
     ImageBinaryOutLine objectUnderTest;
 
-    ImageBinaryOutLine spyObject ;
+    ImageBinaryOutLine spyObject;
 
     int arrayMiddleLength;
 
@@ -108,33 +108,32 @@ public class ImageBinaryConversionTest {
 
 
     @Test
-    public void convertedBinaryMatrixHasOneForPreviousZero(){
+    public void convertedBinaryMatrixHasOneForPreviousZero() {
 
         objectUnderTest.convertAllOneToZero();
 
         //point which has 0 as previous value
-        objectUnderTest.setItem(1,18);
+        objectUnderTest.setItem(1, 18);
 
-        ImageBinaryOutLine.ValueZero itemUnderTest = objectUnderTest.getItem() ;
+        ImageBinaryOutLine.ValueZero itemUnderTest = objectUnderTest.getItem();
 
-        assertEquals("point of interest is the correct one " , 1 , itemUnderTest.rowIndex);
-        assertEquals("point of interest is the correct one " , 18 , itemUnderTest.columnIndex);
+        assertEquals("point of interest is the correct one ", 1, itemUnderTest.rowIndex);
+        assertEquals("point of interest is the correct one ", 18, itemUnderTest.columnIndex);
 
 
-
-        assertTrue("after conversion our point of interest became 1" ,
+        assertTrue("after conversion our point of interest became 1",
                 objectUnderTest.convetedBatmanBinary[itemUnderTest.rowIndex][itemUnderTest.columnIndex] == 1);
 
 
         //point which has 0 as previous value
-        objectUnderTest.setItem(6,25);
+        objectUnderTest.setItem(6, 25);
 
-        ImageBinaryOutLine.ValueZero itemUnderTestTwo = objectUnderTest.getItem() ;
+        ImageBinaryOutLine.ValueZero itemUnderTestTwo = objectUnderTest.getItem();
 
-        assertEquals("point of interest is the correct one " , 6 , itemUnderTestTwo.rowIndex);
-        assertEquals("point of interest is the correct one " , 25 , itemUnderTestTwo.columnIndex);
+        assertEquals("point of interest is the correct one ", 6, itemUnderTestTwo.rowIndex);
+        assertEquals("point of interest is the correct one ", 25, itemUnderTestTwo.columnIndex);
 
-        assertTrue("after conversion our point of interest became 1" ,
+        assertTrue("after conversion our point of interest became 1",
                 objectUnderTest.convetedBatmanBinary[itemUnderTestTwo.rowIndex][itemUnderTestTwo.columnIndex] == 1);
 
     }
@@ -228,30 +227,27 @@ public class ImageBinaryConversionTest {
 
 
     @Test
-    public void forwardScanFromOnePointCrateAnArray(){
+    public void forwardScanFromOnePointCrateAnArray() {
 
         objectUnderTest.convertAllOneToZero();
 
         //point which has 0 as previous value
-        objectUnderTest.setItem(3,14);
+        objectUnderTest.setItem(3, 14);
 
-        ImageBinaryOutLine.ValueZero itemUnderTest = objectUnderTest.getItem() ;
+        ImageBinaryOutLine.ValueZero itemUnderTest = objectUnderTest.getItem();
 
-        assertEquals("point of interest is the correct one " , 3 , itemUnderTest.rowIndex);
-        assertEquals("point of interest is the correct one " , 14 , itemUnderTest.columnIndex);
-
-        /*assertTrue("this point has one" ,
-                objectUnderTest.convetedBatmanBinary[itemUnderTest.rowIndex][itemUnderTest.columnIndex] == 0);*/
+        assertEquals("point of interest is the correct one ", 3, itemUnderTest.rowIndex);
+        assertEquals("point of interest is the correct one ", 14, itemUnderTest.columnIndex);
 
 
-        int[] returnArray = objectUnderTest.forwardIndexScan(itemUnderTest);
+        /*for (int j = objectUnderTest.getMatrixHalfLenght(); j < objectUnderTest.getCOLUMN_COUNT(); j++) {
+            System.out.print(objectUnderTest.convetedBatmanBinary[2][j]+" ");
+        }*/
 
-        assertThat("expected array length " ,  returnArray.length == objectUnderTest.getMatrixHalfLenght() -2 );
+        objectUnderTest.forwardIndexScan(itemUnderTest);
 
-
-        for (int i = 0 ; i <returnArray.length ; i++){
-
-            System.out.print(" "+returnArray[i]);
+        for (int j = objectUnderTest.getMatrixHalfLenght(); j < objectUnderTest.getCOLUMN_COUNT(); j++) {
+            System.out.print(objectUnderTest.convetedBatmanBinary[2][j]+" ");
         }
 
 

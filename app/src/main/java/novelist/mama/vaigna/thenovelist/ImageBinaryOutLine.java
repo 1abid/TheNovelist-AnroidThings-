@@ -57,15 +57,6 @@ public class ImageBinaryOutLine {
         for (ValueZero item : valueZerosIndexList) {
             makeOutLine(item);
         }
-
-        /*for (int row = 0 ; row< convetedBatmanBinary.length ; row++){
-            for (int column = 0 ; column < convetedBatmanBinary[row].length ; column ++){
-                if(column > convetedBatmanBinary[row].length)
-                    System.out.print("\n");
-                else
-                    System.out.print(" " + convetedBatmanBinary[row][column]);
-            }
-        }*/
     }
 
 
@@ -86,56 +77,29 @@ public class ImageBinaryOutLine {
     }
 
 
-    protected int[] forwardIndexScan(ValueZero indexWithPreviousZero) {
+    protected void forwardIndexScan(ValueZero indexWithPreviousZero) {
 
-        int[] arrayUnderInspection = new int[getMatrixHalfLenght() - 2];
 
         int startingRowNumber = indexWithPreviousZero.rowIndex;
 
-        for (int i = getMatrixHalfLenght(); i < getCOLUMN_COUNT(); i++) {
+        int matrixHalf = getMatrixHalfLenght();
 
-            int value = convetedBatmanBinary[startingRowNumber][i];
+        if (convetedBatmanBinary[startingRowNumber][matrixHalf] == 1
+                && convetedBatmanBinary[startingRowNumber][getCOLUMN_COUNT() - 1] == 1) {
 
-            arrayUnderInspection[i - getMatrixHalfLenght()] = value;
-
-            System.out.println(" " + i + " " + startingRowNumber);
-        }
-
-        for (int i = 0; i < arrayUnderInspection.length; i++) {
-
-            if (arrayUnderInspection[i] == 1 && arrayUnderInspection[arrayUnderInspection.length - 1] == 1) {
-                for (int j = i + 1; j < arrayUnderInspection.length - 1; j++) {
-                    arrayUnderInspection[j] = 0;
-                }
-                break;
-            }
-            else {
-                int[] temp =  new int[getMatrixHalfLenght()];
-                if(arrayUnderInspection[i] == 1 && arrayUnderInspection[i+1] ==1){
-
-                    int k = 0 ;
-                    do {
-                        temp[k] = 1 ;
-                        arrayUnderInspection[i] = 0 ;
-
-                    }while (arrayUnderInspection[i] == 1);
-
-
-                    for (int z=0 ; z<temp.length ; z++){
-                        for(int x = z+1 ; x < temp.length -1 ; x++){
-                            temp[x] = 0 ;
-                            arrayUnderInspection[i] = 0 ;
-                        }
-                    }
-
-                }
-            }
-
-
+            for (int i = matrixHalf + 1; i < getCOLUMN_COUNT() - 1; i++)
+                convetedBatmanBinary[startingRowNumber][i] = 0;
         }
 
 
-        return arrayUnderInspection;
+        else {
+            for (int column = matrixHalf; column < getCOLUMN_COUNT(); column++) {
+
+
+            }
+        }
+
+
     }
 
 
