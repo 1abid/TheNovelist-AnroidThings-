@@ -1,6 +1,10 @@
 package novelist.mama.vaigna.thenovelist;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by Abid Hasan on 23/12/17.
@@ -93,9 +97,29 @@ public class ImageBinaryOutLine {
 
 
         else {
+
+            LinkedHashMap<ValueZero , Integer> tempHash = new LinkedHashMap<>();
             for (int column = matrixHalf; column < getCOLUMN_COUNT(); column++) {
 
+                if(convetedBatmanBinary[startingRowNumber][column] == 1
+                        && convetedBatmanBinary[startingRowNumber][column+1] ==1
+                        && column +1 <getCOLUMN_COUNT())
 
+                tempHash.put(new ValueZero(startingRowNumber , column) , convetedBatmanBinary[startingRowNumber][column]);
+
+            }
+
+            int count = 1 ;
+            for (Map.Entry<ValueZero, Integer> entry : tempHash.entrySet()) {
+                ValueZero key = entry.getKey();
+                Integer value = entry.getValue();
+                // now work with key and value...
+                System.out.println(" "+key.columnIndex+" "+value);
+
+                if(count < tempHash.size() -1)
+                    System.out.println(" "+key.columnIndex);
+
+                count ++ ;
             }
         }
 

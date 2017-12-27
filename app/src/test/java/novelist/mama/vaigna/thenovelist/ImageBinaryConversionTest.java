@@ -246,9 +246,9 @@ public class ImageBinaryConversionTest {
 
         objectUnderTest.forwardIndexScan(itemUnderTest);
 
-        for (int j = objectUnderTest.getMatrixHalfLenght(); j < objectUnderTest.getCOLUMN_COUNT(); j++) {
+        /*for (int j = objectUnderTest.getMatrixHalfLenght(); j < objectUnderTest.getCOLUMN_COUNT(); j++) {
             System.out.print(objectUnderTest.convetedBatmanBinary[2][j]+" ");
-        }
+        }*/
 
 
     }
